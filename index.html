@@ -1,0 +1,256 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#101827">
+  <meta name="description" content="ProblemHub؛ جایی برای پیدا کردن مسئله‌های واقعی و ساختن راه‌حل‌های بهتر.">
+  <title>ProblemHub — مشکل‌ها، شروع ایده‌های بزرگ</title>
+  <style>
+    :root {
+      --bg:#0b1220; --panel:#111c2e; --panel-2:#16243a; --line:rgba(185,205,232,.13);
+      --text:#edf4ff; --muted:#9aabc3; --mint:#5ee0bf; --blue:#7ca8ff; --yellow:#ffd477;
+      --danger:#ff8b8b; --shadow:0 18px 55px rgba(0,0,0,.28); --radius:20px;
+    }
+    *{box-sizing:border-box} html{scroll-behavior:smooth}
+    body{margin:0;color:var(--text);background:radial-gradient(ellipse at 8% 0%,rgba(74,125,206,.20),transparent 36rem),radial-gradient(ellipse at 92% 18%,rgba(55,190,158,.13),transparent 32rem),var(--bg);font-family:Tahoma,Arial,sans-serif;line-height:1.8}
+    button,input,textarea,select{font:inherit} button{cursor:pointer} a{color:inherit;text-decoration:none}
+    .wrap{width:min(1120px,calc(100% - 36px));margin:auto}.topbar{padding:18px 0;border-bottom:1px solid var(--line);position:sticky;top:0;background:rgba(11,18,32,.88);backdrop-filter:blur(14px);z-index:4}
+    .nav{display:flex;align-items:center;justify-content:space-between;gap:20px}.brand{display:inline-flex;align-items:center;gap:11px;font-weight:900;font-size:1.12rem;letter-spacing:-.4px}
+    .brand-mark{width:40px;height:40px;display:grid;place-items:center;border-radius:13px;color:#07151a;font-weight:1000;background:linear-gradient(145deg,var(--mint),#9af0da);box-shadow:0 7px 25px rgba(94,224,191,.2)}
+    .nav-note{color:var(--muted);font-size:.86rem}.btn{border:0;border-radius:13px;padding:11px 18px;font-weight:800;transition:transform .18s,filter .18s,border-color .18s}.btn:hover{transform:translateY(-2px);filter:brightness(1.05)}
+    .btn-primary{color:#071a17;background:linear-gradient(135deg,var(--mint),#9aefd9);box-shadow:0 10px 28px rgba(94,224,191,.16)}
+    .btn-secondary{color:var(--text);background:rgba(255,255,255,.045);border:1px solid var(--line)}
+    .hero{padding:62px 0 38px;display:grid;grid-template-columns:1.15fr .85fr;gap:44px;align-items:center}.eyebrow{display:inline-flex;align-items:center;gap:8px;color:var(--mint);background:rgba(94,224,191,.09);border:1px solid rgba(94,224,191,.18);border-radius:999px;padding:5px 13px;font-size:.82rem;font-weight:700}
+    h1{font-size:clamp(2.25rem,5vw,4.2rem);line-height:1.22;letter-spacing:-1.7px;margin:17px 0 16px}h1 span{color:var(--mint)}
+    .hero-copy{color:var(--muted);max-width:610px;font-size:1.02rem;margin:0 0 25px}.actions{display:flex;gap:11px;flex-wrap:wrap}
+    .hero-art{min-height:280px;position:relative;display:grid;place-items:center}.orbit{width:min(280px,75vw);aspect-ratio:1;border-radius:50%;border:1px solid rgba(124,168,255,.26);display:grid;place-items:center;position:relative;background:radial-gradient(circle,rgba(94,224,191,.10),transparent 66%)}
+    .orbit:before,.orbit:after{content:"";position:absolute;inset:24px;border:1px dashed rgba(94,224,191,.25);border-radius:50%;transform:rotate(-25deg) scaleX(1.18)}.orbit:after{inset:58px;transform:rotate(35deg) scaleX(1.3);border-color:rgba(124,168,255,.3)}
+    .core{width:112px;height:112px;border-radius:30px;transform:rotate(-8deg);display:grid;place-items:center;font-size:2.8rem;background:linear-gradient(145deg,#213c53,#132536);border:1px solid rgba(94,224,191,.36);box-shadow:0 0 65px rgba(94,224,191,.17)}
+    .float-tag{position:absolute;padding:8px 13px;border-radius:12px;background:#17263a;border:1px solid var(--line);color:#d8e6f7;font-size:.82rem;box-shadow:var(--shadow)}.tag-a{top:22px;right:0}.tag-b{bottom:27px;left:0}.tag-c{bottom:8px;right:22px}
+    .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:8px 0 35px}.stat{padding:16px 19px;border:1px solid var(--line);border-radius:16px;background:rgba(17,28,46,.72)}.stat strong{display:block;font-size:1.45rem;color:var(--mint);line-height:1.4}.stat span{color:var(--muted);font-size:.82rem}
+    .section-head{display:flex;justify-content:space-between;align-items:end;gap:18px;margin-bottom:18px}h2{margin:0;font-size:1.55rem}.section-head p{margin:4px 0 0;color:var(--muted);font-size:.9rem}
+    .board{padding:22px 0 65px}.toolbar{display:grid;grid-template-columns:minmax(180px,1fr) auto;gap:13px;margin-bottom:14px}.searchbox{position:relative}.searchbox span{position:absolute;right:14px;top:50%;transform:translateY(-50%);color:var(--muted)}
+    input,textarea,select{width:100%;color:var(--text);background:#0f1a2b;border:1px solid var(--line);border-radius:12px;outline:none;padding:12px 14px} .searchbox input{padding-right:43px}input:focus,textarea:focus,select:focus{border-color:rgba(94,224,191,.65);box-shadow:0 0 0 3px rgba(94,224,191,.08)}select{min-width:150px}option{background:#0f1a2b}
+    .filters{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:22px}.chip{border:1px solid var(--line);border-radius:999px;background:rgba(255,255,255,.035);color:var(--muted);padding:7px 13px;font-size:.82rem}.chip.active{color:#071a17;background:var(--mint);border-color:var(--mint);font-weight:800}
+    .grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}.problem{padding:19px;background:linear-gradient(145deg,rgba(21,35,56,.96),rgba(14,25,42,.96));border:1px solid var(--line);border-radius:var(--radius);box-shadow:0 8px 26px rgba(0,0,0,.12);min-width:0}
+    .problem-top{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:10px}.category{color:var(--blue);background:rgba(124,168,255,.1);padding:4px 10px;border-radius:999px;font-size:.75rem}.date{color:#72839b;font-size:.73rem}
+    .problem h3{margin:0 0 7px;font-size:1.08rem;line-height:1.55}.problem-desc{color:var(--muted);font-size:.87rem;margin:0;min-height:50px;white-space:pre-wrap;overflow-wrap:anywhere}
+    .problem-meta{display:flex;gap:12px;flex-wrap:wrap;color:#8395ad;font-size:.75rem;margin-top:10px}.problem-bottom{display:flex;align-items:center;justify-content:space-between;gap:10px;padding-top:14px;margin-top:14px;border-top:1px solid var(--line)}
+    .vote{display:inline-flex;align-items:center;gap:7px;background:rgba(94,224,191,.08);color:var(--mint);border:1px solid rgba(94,224,191,.18);padding:7px 11px;border-radius:11px;font-weight:800;font-size:.82rem}.vote.voted{background:var(--mint);color:#071a17}
+    .detail-btn{color:#d7e5f5;background:rgba(255,255,255,.045);border:1px solid var(--line);padding:7px 11px;border-radius:11px;font-size:.8rem;font-weight:700}.detail-btn:hover{border-color:rgba(94,224,191,.5);color:var(--mint)}
+    .empty{display:none;text-align:center;padding:45px 20px;background:rgba(255,255,255,.025);border:1px dashed var(--line);border-radius:18px;color:var(--muted)}.empty strong{display:block;color:var(--text);font-size:1.05rem;margin-bottom:5px}
+    .submit-area{padding:0 0 76px}.submit-card{display:grid;grid-template-columns:.78fr 1.22fr;gap:30px;padding:29px;border:1px solid rgba(94,224,191,.2);border-radius:24px;background:linear-gradient(120deg,rgba(27,70,69,.30),rgba(17,28,46,.88) 55%)}
+    .submit-intro h2{font-size:1.65rem;margin:8px 0}.submit-intro p{color:var(--muted);font-size:.9rem;margin:0}.form{display:grid;gap:11px}.form label{display:grid;gap:5px;color:#cbd8e9;font-size:.82rem;font-weight:700}.form textarea{min-height:92px;resize:vertical}.form-row{display:grid;grid-template-columns:1fr 1fr;gap:10px}.form-note{color:#8294ad;font-size:.74rem;margin:-2px 0 0}
+    .notice{padding:12px 14px;background:rgba(255,212,119,.07);color:#d9c69d;border:1px solid rgba(255,212,119,.16);border-radius:12px;font-size:.77rem;margin-top:13px}
+    .toast{position:fixed;left:18px;bottom:18px;z-index:10;max-width:min(420px,calc(100% - 36px));padding:12px 16px;border:1px solid rgba(94,224,191,.25);border-radius:13px;background:#172a3b;color:var(--text);box-shadow:var(--shadow);opacity:0;transform:translateY(10px);pointer-events:none;transition:.2s;font-size:.85rem}.toast.show{opacity:1;transform:translateY(0)}
+    dialog{width:min(760px,calc(100% - 24px));max-height:min(88vh,900px);padding:0;color:var(--text);background:#101d2f;border:1px solid rgba(155,190,220,.2);border-radius:22px;box-shadow:0 30px 100px rgba(0,0,0,.55)}dialog::backdrop{background:rgba(2,8,18,.76);backdrop-filter:blur(5px)}
+    .detail-shell{padding:24px}.detail-top{display:flex;justify-content:space-between;align-items:center;gap:12px}.close-btn{width:38px;height:38px;border-radius:11px;border:1px solid var(--line);color:var(--text);background:rgba(255,255,255,.05);font-size:1.2rem}
+    .detail-title{font-size:1.5rem;line-height:1.5;margin:14px 0 7px}.detail-description{color:#b5c4d8;white-space:pre-wrap;overflow-wrap:anywhere;margin:10px 0 16px}.detail-byline{color:#8193aa;font-size:.78rem}.detail-vote-row{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:13px 0 18px;border-bottom:1px solid var(--line)}
+    .solutions-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:20px 0 12px}.solutions-head h3{margin:0;font-size:1.05rem}.solutions-list{display:grid;gap:10px}.solution{padding:13px;background:rgba(255,255,255,.035);border:1px solid var(--line);border-radius:14px}.solution-text{margin:0 0 8px;white-space:pre-wrap;overflow-wrap:anywhere;font-size:.9rem}.solution-bottom{display:flex;align-items:center;justify-content:space-between;gap:10px;color:#8496ad;font-size:.74rem}.solution-vote{padding:5px 9px;font-size:.75rem}.no-solutions{color:var(--muted);padding:15px;border:1px dashed var(--line);border-radius:12px;font-size:.84rem;text-align:center}
+    .detail-form{display:grid;gap:9px;margin-top:16px;padding-top:16px;border-top:1px solid var(--line)}.detail-form label{font-size:.82rem;color:#cbd8e9;font-weight:700}.detail-form textarea{min-height:82px;resize:vertical}.detail-form .form-row{align-items:center}.modal-note{font-size:.72rem;color:#8496ad;margin:0}
+    footer{border-top:1px solid var(--line);padding:22px 0 30px;color:#7f91aa;font-size:.78rem}footer .foot{display:flex;justify-content:space-between;gap:15px;flex-wrap:wrap}
+    @media(max-width:760px){.hero{grid-template-columns:1fr;padding-top:45px;gap:8px}.hero-art{min-height:235px}.submit-card{grid-template-columns:1fr;gap:20px}}
+    @media(max-width:560px){.wrap{width:min(100% - 24px,1120px)}.nav-note{display:none}h1{font-size:2.35rem}.stats{gap:7px}.stat{padding:12px 10px}.stat strong{font-size:1.2rem}.stat span{font-size:.7rem}.toolbar{grid-template-columns:1fr}select{width:100%}.grid{grid-template-columns:1fr}.submit-card{padding:20px 16px}.form-row{grid-template-columns:1fr}.section-head{align-items:start;flex-direction:column}.detail-shell{padding:17px}.detail-title{font-size:1.2rem}.detail-vote-row{align-items:flex-start;flex-direction:column}}
+    @media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;transition:none!important}}
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="wrap nav">
+      <a class="brand" href="#top" aria-label="ProblemHub خانه"><span class="brand-mark">P</span><span>Problem<span style="color:var(--mint)">Hub</span></span></a>
+      <span class="nav-note">از یک مسئلهٔ واقعی، یک ایدهٔ بزرگ شروع می‌شود.</span>
+      <a class="btn btn-secondary" href="#submit" style="padding:8px 13px;font-size:.82rem">ثبت یک مشکل +</a>
+    </div>
+  </header>
+  <main id="top">
+    <section class="wrap hero">
+      <div>
+        <span class="eyebrow">✦ آزمایشگاه ایده‌های واقعی · نسخهٔ ۲</span>
+        <h1>مشکل‌ها را پیدا کن.<br><span>راه‌حل‌های بزرگ</span> بساز.</h1>
+        <p class="hero-copy">مسئله‌های واقعی را ثبت کن، به مهم‌ترینشان رأی بده و برای حل هرکدام ایده پیشنهاد بده. بهترین راه‌حل‌ها با رأی جامعه بالاتر می‌آیند.</p>
+        <div class="actions"><a class="btn btn-primary" href="#board">دیدن مشکل‌ها <span aria-hidden="true">←</span></a><a class="btn btn-secondary" href="#submit">من یک مشکل دارم</a></div>
+      </div>
+      <div class="hero-art" aria-hidden="true"><div class="orbit"><div class="core">💡</div></div><span class="float-tag tag-a">🔍 کشف مسئله</span><span class="float-tag tag-b">🧠 فکر تازه</span><span class="float-tag tag-c">🚀 راه‌حل بهتر</span></div>
+    </section>
+    <section class="wrap stats" aria-label="آمار سایت">
+      <div class="stat"><strong id="statProblems">۰</strong><span>مسئله ثبت‌شده</span></div>
+      <div class="stat"><strong id="statVotes">۰</strong><span>رأی‌های ثبت‌شده</span></div>
+      <div class="stat"><strong id="statIdeas">۰</strong><span>راه‌حل پیشنهادی</span></div>
+    </section>
+    <section class="wrap board" id="board">
+      <div class="section-head"><div><h2>مسئله‌هایی که ارزش حل کردن دارند</h2><p>یک مسئله را باز کن، پیشنهادها را بخوان و به ایدهٔ بهتر رأی بده.</p></div></div>
+      <div class="toolbar"><div class="searchbox"><span>⌕</span><input id="search" type="search" placeholder="جست‌وجو در مشکل‌ها و راه‌حل‌ها..." aria-label="جست‌وجو در مشکل‌ها و راه‌حل‌ها"></div><select id="sort" aria-label="مرتب‌سازی"><option value="popular">بیشترین رأی</option><option value="newest">تازه‌ترین</option></select></div>
+      <div class="filters" id="filters">
+        <button class="chip active" data-category="همه">همه</button><button class="chip" data-category="آموزش">📚 آموزش</button><button class="chip" data-category="زندگی روزمره">🏡 زندگی روزمره</button><button class="chip" data-category="محیط زیست">🌱 محیط زیست</button><button class="chip" data-category="فناوری">💻 فناوری</button><button class="chip" data-category="شهر و حمل‌ونقل">🚌 شهر و حمل‌ونقل</button><button class="chip" data-category="سایر">✨ سایر</button>
+      </div>
+      <div class="grid" id="problemGrid" aria-live="polite"></div><div class="empty" id="empty"><strong>چیزی پیدا نشد!</strong><span>عبارت جست‌وجو یا دسته‌بندی را تغییر بده؛ یا اولین مشکل را ثبت کن.</span></div>
+    </section>
+    <section class="wrap submit-area" id="submit">
+      <div class="submit-card">
+        <div class="submit-intro"><span class="eyebrow">✦ شروع با توست</span><h2>چه چیزی باید بهتر شود؟</h2><p>مشکل را واضح و کوتاه توضیح بده. شاید افراد دیگری هم همین تجربه را داشته باشند و بتوانند برایش راه‌حلی پیدا کنند.</p><div class="notice">🔒 حریم خصوصی: نام کامل، شماره تلفن، نشانی، رمز عبور یا اطلاعات شخصی خودت و دیگران را ننویس. این نسخهٔ آزمایشی فقط روی همین مرورگر ذخیره می‌کند.</div></div>
+        <form class="form" id="problemForm">
+          <label>عنوان مشکل<input id="title" maxlength="72" required placeholder="مثلاً پیدا کردن کتاب مناسب سخت است"></label>
+          <label>توضیح مشکل<textarea id="description" maxlength="420" required placeholder="این مشکل چه زمانی پیش می‌آید و چرا حل‌کردنش مهم است؟"></textarea></label>
+          <div class="form-row"><label>دسته‌بندی<select id="category"><option>آموزش</option><option>زندگی روزمره</option><option>محیط زیست</option><option>فناوری</option><option>شهر و حمل‌ونقل</option><option>سایر</option></select></label><label>نام نمایشی (اختیاری)<input id="author" maxlength="24" placeholder="مثلاً ایده‌پرداز"></label></div>
+          <p class="form-note">برای حفظ حریم خصوصی، بهتر است از نام مستعار استفاده کنی.</p><button class="btn btn-primary" type="submit">ثبت مشکل در این مرورگر ←</button>
+        </form>
+      </div>
+    </section>
+  </main>
+  <footer><div class="wrap foot"><span>© ۲۰۲۶ ProblemHub — نسخهٔ آزمایشی ۲.۰</span><span>از مسئله تا راه‌حل، با همکاری هم ✦</span></div></footer>
+  <dialog id="detailDialog" aria-labelledby="detailTitle">
+    <div class="detail-shell">
+      <div class="detail-top"><span class="eyebrow">✦ صفحهٔ اختصاصی مسئله</span><button class="close-btn" type="button" data-close aria-label="بستن پنجره">×</button></div>
+      <div id="detailContent"></div>
+    </div>
+  </dialog>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <script>
+    (() => {
+      'use strict';
+      const DATA_KEY = 'problemhub-v2-data';
+      const PROBLEM_VOTES_KEY = 'problemhub-v2-problem-votes';
+      const SOLUTION_VOTES_KEY = 'problemhub-v2-solution-votes';
+      const LEGACY_DATA_KEY = 'problemhub-v1-data';
+      const LEGACY_VOTES_KEY = 'problemhub-v1-votes';
+      const starterProblems = [
+        {id:'starter-1',title:'پیدا کردن منابع آموزشی خوب زمان‌بر است',description:'برای یادگیری یک موضوع، منابع زیادی وجود دارد اما تشخیص اینکه کدام‌یک ساده، دقیق و مناسب سطح من است، سخت است.',category:'آموزش',author:'تیم ProblemHub',votes:12,solutions:[{id:'starter-1-s1',text:'ساخت یک فهرست از منابع بررسی‌شده بر اساس سطح و موضوع',author:'تیم ProblemHub',votes:3}],createdAt:Date.now()-86400000*3},
+        {id:'starter-2',title:'مردم نمی‌دانند در محله چه خدماتی وجود دارد',description:'گاهی پیدا کردن تعمیرکار، کتاب‌فروشی، کلاس یا خدمات نزدیک محل زندگی از طریق جست‌وجو سخت است.',category:'زندگی روزمره',author:'تیم ProblemHub',votes:9,solutions:[{id:'starter-2-s1',text:'تهیهٔ فهرست محلی با دسته‌بندی و نظر کاربران',author:'تیم ProblemHub',votes:2}],createdAt:Date.now()-86400000*2},
+        {id:'starter-3',title:'کاهش مصرف پلاستیک در خریدهای روزانه دشوار است',description:'بسیاری از خریدهای کوچک با بسته‌بندی یک‌بارمصرف همراه‌اند و جایگزین‌های مناسب همیشه مشخص نیستند.',category:'محیط زیست',author:'تیم ProblemHub',votes:7,solutions:[{id:'starter-3-s1',text:'راهنمای فروشگاه‌ها و جایگزین‌های کم‌پسماند',author:'تیم ProblemHub',votes:1}],createdAt:Date.now()-86400000},
+        {id:'starter-4',title:'هماهنگ کردن کار گروهی در پروژه‌ها سخت می‌شود',description:'وقتی چند نفر روی یک کار مشترک فعالیت می‌کنند، گاهی وظایف و زمان تحویل روشن نیست و بعضی کارها فراموش می‌شوند.',category:'فناوری',author:'تیم ProblemHub',votes:5,solutions:[{id:'starter-4-s1',text:'یک صفحهٔ ساده برای تقسیم کارهای کوچک و پیگیری آن‌ها',author:'تیم ProblemHub',votes:0}],createdAt:Date.now()-3600000*8}
+      ];
+      const $ = (selector, root=document) => root.querySelector(selector);
+      const grid=$('#problemGrid'), search=$('#search'), sort=$('#sort'), empty=$('#empty'), toast=$('#toast'), dialog=$('#detailDialog'), detailContent=$('#detailContent');
+      let activeCategory='همه', currentDetailId=null, toastTimer;
+      let problems=loadData();
+      let votedProblemIds=loadSet(PROBLEM_VOTES_KEY,LEGACY_VOTES_KEY);
+      let votedSolutionIds=loadSet(SOLUTION_VOTES_KEY,null);
+
+      function safeParse(raw,fallback){try{return raw?JSON.parse(raw):fallback}catch{return fallback}}
+      function normalizeProblem(item,index){
+        if(!item||typeof item!=='object') return null;
+        const sourceSolutions=Array.isArray(item.solutions)?item.solutions:(Array.isArray(item.ideas)?item.ideas:[]);
+        const solutions=sourceSolutions.map((solution,solutionIndex)=>{
+          if(typeof solution==='string') return {id:`legacy-${item.id||index}-s${solutionIndex}`,text:solution,author:'کاربر',votes:0,createdAt:item.createdAt||Date.now()};
+          if(!solution||typeof solution!=='object') return null;
+          return {id:String(solution.id||`solution-${index}-${solutionIndex}`),text:String(solution.text||solution.idea||'').slice(0,180),author:String(solution.author||'کاربر').slice(0,24),votes:Math.max(0,Number(solution.votes)||0),createdAt:Number(solution.createdAt)||Number(item.createdAt)||Date.now()};
+        }).filter(solution=>solution&&solution.text.trim());
+        return {id:String(item.id||`imported-${index}`),title:String(item.title||'مسئلهٔ بدون عنوان').slice(0,72),description:String(item.description||'').slice(0,420),category:String(item.category||'سایر'),author:String(item.author||'ناشناس').slice(0,24),votes:Math.max(0,Number(item.votes)||0),solutions,createdAt:Number(item.createdAt)||Date.now()};
+      }
+      function loadData(){
+        const current=safeParse(localStorage.getItem(DATA_KEY),null);
+        if(Array.isArray(current)) return current.map(normalizeProblem).filter(Boolean);
+        const old=safeParse(localStorage.getItem(LEGACY_DATA_KEY),null);
+        const migrated=Array.isArray(old)?old.map(normalizeProblem).filter(Boolean):starterProblems.map(normalizeProblem);
+        try{localStorage.setItem(DATA_KEY,JSON.stringify(migrated))}catch(error){console.warn('ProblemHub storage migration failed.',error)}
+        return migrated;
+      }
+      function loadSet(key,legacyKey){
+        let raw=localStorage.getItem(key);
+        if(!raw&&legacyKey) raw=localStorage.getItem(legacyKey);
+        const parsed=safeParse(raw,[]);
+        return new Set(Array.isArray(parsed)?parsed.map(String):[]);
+      }
+      function persist(){
+        try{
+          localStorage.setItem(DATA_KEY,JSON.stringify(problems));
+          localStorage.setItem(PROBLEM_VOTES_KEY,JSON.stringify([...votedProblemIds]));
+          localStorage.setItem(SOLUTION_VOTES_KEY,JSON.stringify([...votedSolutionIds]));
+          return true;
+        }catch(error){console.error('ProblemHub save failed.',error);showToast('ذخیره‌سازی انجام نشد؛ فضای مرورگر را بررسی کن.');return false}
+      }
+      function num(value){return Number(value||0).toLocaleString('fa-IR')}
+      function esc(value){return String(value??'').replace(/[&<>"']/g,char=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[char]))}
+      function dateLabel(timestamp){const days=Math.max(0,Math.floor((Date.now()-(Number(timestamp)||Date.now()))/86400000));if(days===0)return'امروز';if(days===1)return'دیروز';return`${num(days)} روز پیش`}
+      function showToast(message){toast.textContent=message;toast.classList.add('show');clearTimeout(toastTimer);toastTimer=setTimeout(()=>toast.classList.remove('show'),2800)}
+      function updateStats(){
+        const solutionCount=problems.reduce((sum,p)=>sum+p.solutions.length,0);
+        const problemVoteCount=problems.reduce((sum,p)=>sum+p.votes,0);
+        const solutionVoteCount=problems.reduce((sum,p)=>sum+p.solutions.reduce((n,s)=>n+s.votes,0),0);
+        $('#statProblems').textContent=num(problems.length);$('#statVotes').textContent=num(problemVoteCount+solutionVoteCount);$('#statIdeas').textContent=num(solutionCount);
+      }
+      function filteredProblems(){
+        const term=search.value.trim().toLocaleLowerCase('fa');
+        const result=problems.filter(item=>{
+          const matchCategory=activeCategory==='همه'||item.category===activeCategory;
+          const searchable=[item.title,item.description,item.category,item.author,...item.solutions.map(solution=>solution.text)].join(' ').toLocaleLowerCase('fa');
+          return matchCategory&&(!term||searchable.includes(term));
+        });
+        result.sort(sort.value==='newest'?(a,b)=>b.createdAt-a.createdAt:(a,b)=>b.votes-a.votes||b.createdAt-a.createdAt);
+        return result;
+      }
+      function render(){
+        const items=filteredProblems();
+        grid.innerHTML=items.map(item=>{
+          const voted=votedProblemIds.has(item.id);
+          return `<article class="problem" data-id="${esc(item.id)}">
+            <div class="problem-top"><span class="category">${esc(item.category)}</span><span class="date">${dateLabel(item.createdAt)}</span></div>
+            <h3>${esc(item.title)}</h3><p class="problem-desc">${esc(item.description)}</p>
+            <div class="problem-meta"><span>✍️ ${esc(item.author)}</span><span>💡 ${num(item.solutions.length)} راه‌حل</span></div>
+            <div class="problem-bottom"><button class="vote ${voted?'voted':''}" data-action="problem-vote" aria-pressed="${voted}">${voted?'✓ رأی دادی':'↑ رأی می‌دهم'} <span>${num(item.votes)}</span></button><button class="detail-btn" data-action="details">مشاهدهٔ جزئیات و راه‌حل‌ها ←</button></div>
+          </article>`;
+        }).join('');
+        empty.style.display=items.length?'none':'block';grid.style.display=items.length?'grid':'none';updateStats();
+      }
+      function currentProblem(){return problems.find(problem=>problem.id===currentDetailId)||null}
+      function renderDetails(){
+        const item=currentProblem();if(!item){dialog.close();return}
+        const sorted=[...item.solutions].sort((a,b)=>b.votes-a.votes||a.createdAt-b.createdAt);
+        const isVoted=votedProblemIds.has(item.id);
+        detailContent.innerHTML=`
+          <span class="category">${esc(item.category)}</span>
+          <h2 class="detail-title" id="detailTitle">${esc(item.title)}</h2>
+          <div class="detail-byline">ثبت‌شده توسط ${esc(item.author)} · ${dateLabel(item.createdAt)}</div>
+          <p class="detail-description">${esc(item.description)}</p>
+          <div class="detail-vote-row"><span class="detail-byline">به نظرت این مسئله مهم است؟</span><button class="vote ${isVoted?'voted':''}" data-action="problem-vote" aria-pressed="${isVoted}">${isVoted?'✓ رأی دادی':'↑ رأی می‌دهم'} <span>${num(item.votes)}</span></button></div>
+          <div class="solutions-head"><h3>💡 راه‌حل‌های پیشنهادی</h3><span class="detail-byline">${num(item.solutions.length)} پیشنهاد</span></div>
+          <div class="solutions-list">${sorted.length?sorted.map(solution=>{const solutionVoted=votedSolutionIds.has(solution.id);return `<article class="solution"><p class="solution-text">${esc(solution.text)}</p><div class="solution-bottom"><span>پیشنهاد از ${esc(solution.author)}</span><button class="vote solution-vote ${solutionVoted?'voted':''}" data-action="solution-vote" data-solution-id="${esc(solution.id)}" aria-pressed="${solutionVoted}">${solutionVoted?'✓ رأی دادی':'↑ رأی به راه‌حل'} · ${num(solution.votes)}</button></div></article>`}).join(''):'<div class="no-solutions">هنوز راه‌حلی ثبت نشده. اولین پیشنهاد را تو اضافه کن!</div>'}</div>
+          <form class="detail-form" id="solutionForm"><label for="solutionText">راه‌حل پیشنهادی تو</label><textarea id="solutionText" name="solution" maxlength="180" required placeholder="راه‌حلت را کوتاه، روشن و قابل‌اجرا توضیح بده..."></textarea><div class="form-row"><label>نام نمایشی (اختیاری)<input name="solutionAuthor" maxlength="24" placeholder="مثلاً ایده‌پرداز"></label><button class="btn btn-primary" type="submit">ثبت راه‌حل ←</button></div><p class="modal-note">از نام مستعار استفاده کن و اطلاعات شخصی ننویس. پیشنهاد در همین مرورگر ذخیره می‌شود.</p></form>`;
+      }
+      function openDetails(problemId){currentDetailId=problemId;renderDetails();if(!dialog.open)dialog.showModal()}
+      function toggleProblemVote(item){
+        if(votedProblemIds.has(item.id)){item.votes=Math.max(0,item.votes-1);votedProblemIds.delete(item.id);showToast('رأی تو برداشته شد.')}else{item.votes++;votedProblemIds.add(item.id);showToast('رأی تو ثبت شد؛ ممنون از مشارکتت!')}
+        persist();render();if(dialog.open&&currentDetailId===item.id)renderDetails();
+      }
+      function toggleSolutionVote(item,solution){
+        if(votedSolutionIds.has(solution.id)){solution.votes=Math.max(0,solution.votes-1);votedSolutionIds.delete(solution.id);showToast('رأی راه‌حل برداشته شد.')}else{solution.votes++;votedSolutionIds.add(solution.id);showToast('رأی تو به این راه‌حل ثبت شد!')}
+        persist();render();renderDetails();
+      }
+      $('#filters').addEventListener('click',event=>{const button=event.target.closest('button[data-category]');if(!button)return;activeCategory=button.dataset.category;$('#filters').querySelectorAll('.chip').forEach(chip=>chip.classList.toggle('active',chip===button));render()});
+      search.addEventListener('input',render);sort.addEventListener('change',render);
+      grid.addEventListener('click',event=>{
+        const button=event.target.closest('button[data-action]');if(!button)return;
+        const card=button.closest('.problem');const item=problems.find(problem=>problem.id===card?.dataset.id);if(!item)return;
+        if(button.dataset.action==='problem-vote')toggleProblemVote(item);
+        if(button.dataset.action==='details')openDetails(item.id);
+      });
+      dialog.addEventListener('click',event=>{
+        if(event.target===dialog||event.target.closest('[data-close]')){dialog.close();return}
+        const button=event.target.closest('button[data-action]');if(!button)return;
+        const item=currentProblem();if(!item)return;
+        if(button.dataset.action==='problem-vote')toggleProblemVote(item);
+        if(button.dataset.action==='solution-vote'){
+          const solution=item.solutions.find(candidate=>candidate.id===button.dataset.solutionId);if(solution)toggleSolutionVote(item,solution);
+        }
+      });
+      dialog.addEventListener('close',()=>{currentDetailId=null;detailContent.innerHTML=''});
+      dialog.addEventListener('submit',event=>{
+        if(event.target.id!=='solutionForm')return;event.preventDefault();
+        const item=currentProblem();if(!item)return;
+        const form=event.target, text=form.elements.solution.value.trim(), author=form.elements.solutionAuthor.value.trim()||'ناشناس';
+        if(text.length<8){showToast('لطفاً راه‌حل را کمی کامل‌تر بنویس.');return}
+        item.solutions.push({id:`solution-${Date.now()}-${Math.random().toString(36).slice(2,8)}`,text,author,votes:0,createdAt:Date.now()});
+        persist();render();renderDetails();showToast('راه‌حل تو در همین مرورگر ذخیره شد.');
+      });
+      $('#problemForm').addEventListener('submit',event=>{
+        event.preventDefault();const title=$('#title').value.trim(),description=$('#description').value.trim(),category=$('#category').value,author=$('#author').value.trim()||'ناشناس';
+        if(title.length<6||description.length<12){showToast('عنوان و توضیح را کمی کامل‌تر بنویس.');return}
+        problems.unshift({id:`problem-${Date.now()}-${Math.random().toString(36).slice(2,8)}`,title,description,category,author,votes:0,solutions:[],createdAt:Date.now()});
+        persist();event.target.reset();activeCategory='همه';$('#filters').querySelectorAll('.chip').forEach(chip=>chip.classList.toggle('active',chip.dataset.category==='همه'));search.value='';sort.value='newest';render();showToast('مشکل ثبت شد و فقط در این مرورگر ذخیره شد.');$('#board').scrollIntoView({behavior:'smooth',block:'start'});
+      });
+      render();
+    })();
+  </script>
+</body>
+</html>
